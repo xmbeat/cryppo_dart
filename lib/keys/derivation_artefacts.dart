@@ -50,7 +50,7 @@ class DerivationArtefacts {
     final bsonData = base64Url.decode(artefacts);
     version = utf8.decode(bsonData.sublist(0, 1));
     final bsonBuffer = bsonData.sublist(1);
-    final deserialized = BSON().deserialize(BsonBinary.from(bsonBuffer));
+    final deserialized = BsonCodec.deserialize(BsonBinary.from(bsonBuffer));
     final BsonBinary iv = deserialized['iv'];
 
     this.iterations = deserialized['i'];
@@ -60,7 +60,7 @@ class DerivationArtefacts {
 
   /// Convert arteacts into Cryppo's artefact serialization format. Can be reloaded with [DerivationArtefacts.fromSerialized]
   String serialize() {
-    final artefactPayload = BSON()
+    final artefactPayload = BsonCodec
         .serialize({'i': iterations, 'iv': BsonBinary.from(salt), 'l': length});
     final serializedArtefacts = base64Url
         .encode([...utf8.encode(version), ...artefactPayload.byteList]);

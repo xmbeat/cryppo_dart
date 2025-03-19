@@ -35,7 +35,7 @@ class EncryptionArtefacts {
     final versionByte = artefactBytes.sublist(0, 1);
     this.version = utf8.decode(versionByte);
     final decoded =
-        BSON().deserialize(BsonBinary.from(artefactBytes.sublist(1)));
+      BsonCodec.deserialize(BsonBinary.from(artefactBytes.sublist(1)));
     this.salt = decoded['iv'].byteList;
     this.authTag = decoded['at'].byteList;
     this.authData = utf8.encode(decoded['ad']);
@@ -44,7 +44,7 @@ class EncryptionArtefacts {
   /// Convert artefacts to a format that can be used in Cryppo's encryption serialization format
   String serialize() {
     final versionByte = utf8.encode('A');
-    final bsonPayload = BSON().serialize({
+    final bsonPayload = BsonCodec.serialize({
       'iv': BsonBinary.from(salt),
       'at': BsonBinary.from(authTag),
       'ad': utf8.decode(authData)

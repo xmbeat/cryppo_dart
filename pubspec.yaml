@@ -8,10 +8,10 @@ environment:
 
 dependencies:
   cryptography: ^2.0.2
-  bson: ^1.0.3
-  pointycastle: ^3.2.0
+  bson: ^5.0.5
+  pointycastle: ^4.0.0
   asn1lib: ^1.0.2
-  basic_utils: ^3.4.0
+  basic_utils: ^5.8.2
   ninja: ^3.0.2
 
 dev_dependencies:
